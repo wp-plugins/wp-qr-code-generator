@@ -1,14 +1,26 @@
 <?
 /*
 Plugin Name: WP QR Code Generator
-Plugin URI: http://vivacityinfotech.com/
+Plugin URI: http://www.vivacityinfotech.net
 Description: An easy way to add your QR Code widget in your sidebars and add in your page .
 Version: 1.0
-Author URI: http://vivacityinfotech.com/
+Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 Text Domain: WP-QR-Code-Generator
 License: vivacityinfotech
 */
+add_filter('plugin_row_meta', 'RegisterPluginLinks_qr',10, 2);
+function RegisterPluginLinks_qr($links, $file) {
+	if ( strpos( $file, 'wp-qr-code-generator.php' ) !== false ) {
+		$links[] = '<a href="https://wordpress.org/plugins/wp-qr-code-generator/faq/">FAQ</a>';
+		$links[] = '<a href="mailto:support@vivacityinfotech.com">Support</a>';
+		$links[] = '<a href="http://tinyurl.com/owxtkmt">Donate</a>';
+	}
+	return $links;
+}
+
+
+
 add_action('wp_enqueue_scripts','jquery_link');
 add_shortcode('vqr','qr_shortcode');
 function jquery_link(){
