@@ -5,7 +5,6 @@ Tags: QR code , QR Code Wordpress Plugin , QR Code Generator , WP QR Code , QR C
 Requires at least: 3.0
 Tested up to: 3.8
 License: GPLv2 or later
-Stable tag: 1.2
 
 An easy way to add your QR Code widget in your sidebars and add in your page .
 
@@ -71,9 +70,6 @@ People often ask how big or small (physically) a QR Code can be, well the simple
 2.  WP QR Code Generator plugin appears after activation in Pages or post section.
 
 == Changelog ==
-
-= 1.2 =
-* Added the feature to change Background color.
 
 = 1.0 =
 * Initial release
