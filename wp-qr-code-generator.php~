@@ -109,7 +109,7 @@ new QRCode(document.getElementById("getvalue"), {
 		$text = isset($input_value[ 'text' ])?$input_value[ 'text' ]:"Enter TEXT";
 		$size = isset($input_value[ 'size' ])?$input_value[ 'size' ]:"150";
 		$title = isset($input_value[ 'title' ])?$input_value[ 'title' ]:" QR Code Generator";
-                $color_Light = isset($input_value[ 'color_Light' ])?$input_value[ 'color_Light' ]:"c1c1c1";
+                $color_Light = isset($input_value[ 'color_Light' ])?$input_value[ 'color_Light' ]:"#c1c1c1";
 		$level = $input_value[ 'level' ];
 		?>
 		<p>
