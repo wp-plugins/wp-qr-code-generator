@@ -3,7 +3,7 @@
 Plugin Name: WP QR Code Generator
 Plugin URI: http://www.vivacityinfotech.net
 Description: An easy way to add your QR Code widget in your sidebars and add in your page .
-Version: 1.0
+Version: 1.2
 Author URI: http://www.vivacityinfotech.net
 Requires at least: 3.8
 Text Domain: WP-QR-Code-Generator
@@ -21,15 +21,24 @@ function RegisterPluginLinks_qr($links, $file) {
 
 
 
-add_action('wp_enqueue_scripts','jquery_link');
+add_action('admin_enqueue_scripts','admin_jquery_link');
+add_action('wp_enqueue_scripts','front_jquery_link');
 add_shortcode('vqr','qr_shortcode');
-function jquery_link(){
+
+function admin_jquery_link($hook_suffix){
+ wp_enqueue_style( 'wp-color-picker' );
+ wp_enqueue_script( 'admin_script', plugins_url('/js/admin_script.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+}
+ 
+function front_jquery_link(){
 wp_enqueue_script( 'WP-QR-Code-Generator-js', plugins_url( 'qrcode.js' , __FILE__ ));
 }
+
 function qr_shortcode($attr,$cont=null){
 extract(shortcode_atts( array(
 		'msg' => " WP QR Code Generator",
 		'size' => 160,
+                'color_Light' => "'.$color_Light.'",
 		'level' => "Q"
 	 	), $attr ));
 		$r=rand(0,9999);
@@ -39,8 +48,8 @@ new QRCode(document.getElementById("vqr'.$r.'"), {
 	text: "'.$msg.'",
 	width: '.$size.',
 	height: '.$size.',
-	colorDark : "#000000",
-	colorLight : "#ffffff",
+	colorDark : "#222222",
+	colorLight : "'.$color_Light.'",
 	correctLevel : QRCode.CorrectLevel.'.$level.'
 });
 </script>';
@@ -74,6 +83,7 @@ class qrcode_Widget extends WP_Widget {
 		$title = apply_filters( 'widget_title', $input_value['title'] );
 		$text = $input_value[ 'text' ];
 		$size = $input_value[ 'size' ];
+                $color_Light = $input_value[ 'color_Light' ];
 		$level = $input_value[ 'level' ];
 		echo $before_widget;
 		if ( ! empty( $title ) )
@@ -84,11 +94,14 @@ new QRCode(document.getElementById("getvalue"), {
 	text: "'.$text.'",
 	width: '.$size.',
 	height: '.$size.',
-	colorDark : "#000000",
-	colorLight : "#ffffff",
+	colorDark : "#222222",
+	colorLight : "'.$color_Light.'",
 	correctLevel : QRCode.CorrectLevel.'.$level.'
 });
+
+
 </script>';
+
 		echo $after_widget;
 	}
 
@@ -96,15 +109,18 @@ new QRCode(document.getElementById("getvalue"), {
 		$text = isset($input_value[ 'text' ])?$input_value[ 'text' ]:"Enter TEXT";
 		$size = isset($input_value[ 'size' ])?$input_value[ 'size' ]:"150";
 		$title = isset($input_value[ 'title' ])?$input_value[ 'title' ]:" QR Code Generator";
+                $color_Light = isset($input_value[ 'color_Light' ])?$input_value[ 'color_Light' ]:"ffffff";
 		$level = $input_value[ 'level' ];
 		?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label> <br/>
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>">TITLE:</label> <br/>
 		<input class="block_text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /><br/>
 		<label for="<?php echo $this->get_field_id( 'text' ); ?>">TEXT:</label> <br/>
 		<textarea class="block_text" id="<?php echo $this->get_field_id( 'text' ); ?>" name="<?php echo $this->get_field_name( 'text' ); ?>" ><?php echo esc_attr( $text ); ?></textarea><br/>
 		<label for="<?php echo $this->get_field_id( 'size' ); ?>">SIZE:</label> <br/>
 		<input class="block_text" id="<?php echo $this->get_field_id( 'size' ); ?>" name="<?php echo $this->get_field_name( 'size' ); ?>" type="text" value="<?php echo esc_attr( $size ); ?>" /><br/>
+                <label for="<?php echo $this->get_field_id( 'color_Light' ); ?>">BACKGROUND COLOR:</label> <br/>
+		<input class="color_Light intentColor" id="<?php echo $this->get_field_id( 'color_Light' ); ?>" name="<?php echo $this->get_field_name( 'color_Light' ); ?>" type="text" value="<?php echo esc_attr( $color_Light ); ?>" data-default-color="<?php echo esc_attr( $color_Light ); ?>"/><br/>
 		<label for="<?php echo $this->get_field_id( 'level' ); ?>">LEVEL:</label> <br/>
 		<select class="block_text" id="<?php echo $this->get_field_id( 'level' ); ?>" name="<?php echo $this->get_field_name( 'level' ); ?>">
 	<option value="L" <?php if($level=='L' ) echo 'selected'; ?> >L</option>
@@ -122,10 +138,13 @@ new QRCode(document.getElementById("getvalue"), {
 		$input_value['title'] = strip_tags( $new_inputvalue['title'] );
 		$input_value['text'] = strip_tags( $new_inputvalue['text'] );
 		$input_value['size'] = strip_tags( $new_inputvalue['size'] );
+                $input_value['color_Light'] = strip_tags( $new_inputvalue['color_Light'] );
 		$input_value['level'] = strip_tags( $new_inputvalue['level'] );
 		return $input_value;
 	}
 
 }
 add_action( 'widgets_init', create_function( '', 'register_widget( "qrcode_Widget" );' ) );
+
 ?>
+
