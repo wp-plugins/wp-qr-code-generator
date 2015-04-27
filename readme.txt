@@ -3,7 +3,7 @@ Contributors: vivacityinfotech.jaipur
 Donate link: http://tinyurl.com/owxtkmt
 Tags: QR code , QR Code Wordpress Plugin , QR Code Generator , WP QR Code , QR Code widget , QR Code shortcodes , QR code in page , QR code in post ,  QR Code scanner . 
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.2
 License: GPLv2 or later
 Stable tag: 1.2
 
