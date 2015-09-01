@@ -4,6 +4,7 @@ Donate link:  http://bit.ly/1icl56K
 Tags: QR code , QR Code Wordpress Plugin , QR Code Generator , WP QR Code , QR Code widget , QR Code shortcodes , QR code in page , QR code in post ,  QR Code scanner . 
 Requires at least: 3.0
 Tested up to: 4.3
+Stable tag: 1.3
 License: GPLv2 or later
 
 An easy way to add your QR Code widget in your sidebars and add in your page .
